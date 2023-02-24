@@ -1,11 +1,13 @@
 # _DE-SRFREN_
 Video restoration Processing Pipeline
 
+> *NOTE* only one video at a time
+
 # Goals
-1. [ ] Take a video frame and turn into images(lossless) substandard conversion to 24 FPS
+1. [X] Take a video frame and turn into images
 2. [ ] Super resolve the image
 3. [ ] Restore the Faces in each frame step
-4. [ ] Merge Frames H.264 encode FHD Video/Quick Time MOV
+4. [X] Merge Frames H.264 codec MP4
 
 Feature Requests
 -------------

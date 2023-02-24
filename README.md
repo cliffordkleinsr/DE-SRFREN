@@ -2,6 +2,22 @@
 Video restoration Processing Pipeline
 
 > *NOTE* only one video at a time
+USAGE
+----
+- Basic argument structure:
+```yaml
+-i or --input , your input directory
+-o or --output , your output directory
+-h or --help , for help with arguments
+```
+- To Decode a video to an image sequence run argument:
+```py
+python decode_video_to_frames.py -i Input -o Output
+```
+- To Encode an image sequence to a H.264 MP4 codec run argument:
+```py
+python encode_frames_to_video.py - i Input - o Output
+```
 
 # Goals
 1. [X] Take a video frame and turn into images

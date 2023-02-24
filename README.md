@@ -15,3 +15,8 @@ Feature Requests
 2. [ ] Color BLack and White Images
 3. [ ] TBA 
 4. [ ] Lossless Decoding and encoding? TIFF?
+
+Question
+---------
+What AIs to use?
+

@@ -18,5 +18,5 @@ Feature Requests
 
 Question
 ---------
-What AIs to use?
+What AIs to use? [#2](https://github.com/cliffordkleinsr/DE-SRFREN/issues/2#issue-1598488233)
 

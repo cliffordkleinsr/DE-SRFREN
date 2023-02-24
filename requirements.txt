@@ -1,0 +1,5 @@
+imageio==2.25.1
+av
+argparse
+datetime
+Pillow

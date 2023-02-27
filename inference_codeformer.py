@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     parser.add_argument('-i', '--input_path', type=str, default='image_sequence', 
             help='Input image, video or folder. Default: image_sequence')
-    parser.add_argument('-o', '--output_path', type=str, default='processed_image_sequence, 
+    parser.add_argument('-o', '--output_path', type=str, default='processed_image_sequence', 
             help='Output folder. Default: processed_image_sequence')
     parser.add_argument('-w', '--fidelity_weight', type=float, default=0.5, 
             help='Balance the quality and fidelity. Default: 0.5')

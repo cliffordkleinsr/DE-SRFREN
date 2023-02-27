@@ -32,14 +32,14 @@ def set_realesrgan():
         num_feat=64,
         num_block=23,
         num_grow_ch=32,
-        scale=2,
+        scale=4,
     )
     upsampler = RealESRGANer(
-        scale=2,
-        model_path="https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/RealESRGAN_x2plus.pth",
+        scale=4,
+        model_path="https://drive.google.com/file/d/14UbLLHUFF359gW-t22GNbt8vSc4Q40g9/view?usp=share_link",
         model=model,
         tile=args.bg_tile,
-        tile_pad=40,
+        tile_pad=10,
         pre_pad=0,
         half=use_half
     )
@@ -87,7 +87,7 @@ if __name__ == '__main__':
                 Default: retinaface_resnet50')
     parser.add_argument('--bg_upsampler', type=str, default='None', help='Background upsampler. Optional: realesrgan')
     parser.add_argument('--face_upsample', action='store_true', help='Face upsampler after enhancement. Default: False')
-    parser.add_argument('--bg_tile', type=int, default=400, help='Tile size for background sampler. Default: 400')
+    parser.add_argument('--bg_tile', type=int, default=0, help='Tile size for background sampler. Default: 400')
     parser.add_argument('--suffix', type=str, default=None, help='Suffix of the restored faces. Default: None')
     parser.add_argument('--save_video_fps', type=float, default=None, help='Frame rate for saving video. Default: None')
 

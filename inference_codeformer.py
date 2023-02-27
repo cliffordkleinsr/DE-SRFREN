@@ -1,3 +1,17 @@
+'''
+@inproceedings{zhou2022codeformer,
+    author = {Zhou, Shangchen and Chan, Kelvin C.K. and Li, Chongyi and Loy, Chen Change},
+    title = {Towards Robust Blind Face Restoration with Codebook Lookup TransFormer},
+    booktitle = {NeurIPS},
+    year = {2022}
+}
+@InProceedings{wang2021realesrgan,
+    author    = {Xintao Wang and Liangbin Xie and Chao Dong and Ying Shan},
+    title     = {Real-ESRGAN: Training Real-World Blind Super-Resolution with Pure Synthetic Data},
+    booktitle = {International Conference on Computer Vision Workshops (ICCVW)},
+    date      = {2021}
+}
+'''
 import os
 import cv2
 import argparse
@@ -75,8 +89,8 @@ if __name__ == '__main__':
             help='Output folder. Default: processed_image_sequence')
     parser.add_argument('-w', '--fidelity_weight', type=float, default=0.5, 
             help='Balance the quality and fidelity. Default: 0.5')
-    parser.add_argument('-s', '--upscale', type=int, default=2, 
-            help='The final upsampling scale of the image. Default: 2')
+    parser.add_argument('-s', '--upscale', type=int, default=4, 
+            help='The final upsampling scale of the image. Default: 4')
     parser.add_argument('--has_aligned', action='store_true', help='Input are cropped and aligned faces. Default: False')
     parser.add_argument('--only_center_face', action='store_true', help='Only restore the center face. Default: False')
     parser.add_argument('--draw_box', action='store_true', help='Draw the bounding box for the detected faces. Default: False')
@@ -87,7 +101,7 @@ if __name__ == '__main__':
                 Default: retinaface_resnet50')
     parser.add_argument('--bg_upsampler', type=str, default='None', help='Background upsampler. Optional: realesrgan')
     parser.add_argument('--face_upsample', action='store_true', help='Face upsampler after enhancement. Default: False')
-    parser.add_argument('--bg_tile', type=int, default=0, help='Tile size for background sampler. Default: 400')
+    parser.add_argument('--bg_tile', type=int, default=0, help='Tile size for background sampler. Default: 0')
     parser.add_argument('--suffix', type=str, default=None, help='Suffix of the restored faces. Default: None')
     parser.add_argument('--save_video_fps', type=float, default=None, help='Frame rate for saving video. Default: None')
 

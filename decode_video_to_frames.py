@@ -19,8 +19,8 @@ def read_imageio_pyav(Input, Output):
 
 if __name__ == "__main__":
     a = argparse.ArgumentParser()
-    a.add_argument('-i', '--input', type=str, default='Input', help='Input image or folder')
-    a.add_argument('-o', '--output', type=str, default='Output', help='Output folder')
+    a.add_argument('-i', '--input', type=str, default='video_folder', help='Input image or folder')
+    a.add_argument('-o', '--output', type=str, default='image_sequence', help='Output folder')
     args = a.parse_args()
 
     if not os.path.exists(args.input):

@@ -11,7 +11,7 @@ def merge_image_sequence(Input, Output, fps):
            complete_path = Input +'/'+ file
            fileList.append(complete_path)
 
-   writer = iio.get_writer('{}/test.mp4'.format(Output), fps=fps)
+   writer = iio.get_writer('{}/processed.mp4'.format(Output), fps=fps)
 
    for im in fileList:
        writer.append_data(iio.imread(im))
@@ -19,8 +19,8 @@ def merge_image_sequence(Input, Output, fps):
 
 if __name__ == "__main__":
     a = argparse.ArgumentParser()
-    a.add_argument('-i', '--input', type=str, default='Output', help='Input image or folder')
-    a.add_argument('-o', '--output', type=str, default='Temp', help='Output folder')
+    a.add_argument('-i', '--input', type=str, default='processed_image_sequence', help='Input image or folder')
+    a.add_argument('-o', '--output', type=str, default='merged_sequence', help='Output folder')
     args = a.parse_args()
 
     if not os.path.exists(args.input):

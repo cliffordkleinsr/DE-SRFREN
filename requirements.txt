@@ -1,4 +1,5 @@
 av
+imageio[ffmpeg]
 imageio==2.26
 Pillow
 argparse

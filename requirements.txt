@@ -1,5 +1,5 @@
 av
-imageio
+imageio==2.26
 Pillow
 argparse
 einops

@@ -20,12 +20,6 @@ def main():
         type=str,
         default='inputs/whole_imgs',
         help='Input image or folder. Default: inputs/whole_imgs')
-    parser.add_argument(
-        '-n',
-        '--model_name',
-        type=str,
-        default='RealESRGAN_x2plus',
-        help=('Model names: RealESRGAN_x4plus |RealESRGAN_x2plus| RealESRNet_x4plus'))
     parser.add_argument('-o', '--output', type=str, default='results', help='Output folder. Default: results')
     # we use version to select models, which is more user-friendly
     parser.add_argument(
@@ -68,32 +62,20 @@ def main():
     os.makedirs(args.output, exist_ok=True)
 
     # ------------------------ set up background upsampler ------------------------
-    if args.bg_upsampler == 'realesrgan':
+        if args.bg_upsampler == 'realesrgan':
         if not torch.cuda.is_available():  # CPU
             import warnings
             warnings.warn('The unoptimized RealESRGAN is slow on CPU. We do not use it. '
                           'If you really want to use it, please modify the corresponding codes.')
             bg_upsampler = None
-            
         else:
-            args.model_name = args.model_name.split('.')[0]
-            if args.model_name in ['RealESRGAN_x4plus', 'RealESRNet_x4plus']:  # x4 RRDBNet model
-                model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=4)
-                netscale = 4
-            elif args.model_name in ['RealESRGAN_x2plus']:  # x2 RRDBNet model
-                model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
-                netscale = 2
-                
-            # determine model paths
-            model_path = os.path.join('experiments/pretrained_models', args.model_name + '.pth')
-            if not os.path.isfile(model_path):
-                model_path = os.path.join('realesrgan/weights', args.model_name + '.pth')
-            if not os.path.isfile(model_path):
-                raise ValueError(f'Model {args.model_name} does not exist.')
-            
+            from basicsr.archs.rrdbnet_arch import RRDBNet
+            from realesrgan import RealESRGANer
+            model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=2)
             bg_upsampler = RealESRGANer(
-                scale=netscale,
-                model_path= 'https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth',
+                scale=2,
+                model_path='https://github.com/xinntao/Real-ESRGAN/releases/download/v0.2.1/RealESRGAN_x2plus.pth',
+                model=model,
                 tile=args.bg_tile,
                 tile_pad=10,
                 pre_pad=0,

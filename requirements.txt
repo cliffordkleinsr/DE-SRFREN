@@ -1,21 +1,17 @@
-imageio==2.25.1
 av
-argparse
-datetime
+imageio
 Pillow
-addict
-future
+argparse
+einops
 lmdb
-numpy
+numpy<1.21  # numba requires numpy<1.21,>=1.17
 opencv-python
 pyyaml
-requests
-scikit-image
+scikit-learn
 scipy
 tb-nightly
-torch>=1.7.1
+timm
+torch>=1.7
 torchvision
 tqdm
 yapf
-lpips
-gdown # supports downloading the large file from Google Drive

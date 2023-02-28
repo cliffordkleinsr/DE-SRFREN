@@ -19,7 +19,7 @@ def merge_image_sequence(Input, Output, fps):
 
 if __name__ == "__main__":
     a = argparse.ArgumentParser()
-    a.add_argument('-i', '--input', type=str, default='processed_image_sequence', help='Input image or folder')
+    a.add_argument('-i', '--input', type=str, default='results/restored_imgs', help='Input image or folder')
     a.add_argument('-o', '--output', type=str, default='merged_sequence', help='Output folder')
     args = a.parse_args()
 

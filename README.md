@@ -21,7 +21,7 @@ or
 ```py
 python inference.py -i inputs/videos -fo merged_sequence -vo results --face_enhance #to super resolve your image after restoration
 ```
-- For quick inference with the VQFR variant use [NOTE](https://github.com/cliffordkleinsr/DE-SRFREN/releases#:~:text=I%20realized%20that%20the%20VQFR%20face%20restoration%20pipeline%20does%20not%20work%20well%20with%20a%20subject%27s%20eyes%20and%20hair%20features.):
+- For quick inference with the VQFR variant use:
 ```py
 python inference.py -i inputs/videos -fo merged_sequence -vo results --vqfr_enhance -v 2.0 -s 2 -f 0.1 --bg_upsampler None #for faster inference
 ```
@@ -29,7 +29,7 @@ or
 ```py
 python inference.py -i inputs/videos -fo merged_sequence -vo results --vqfr_enhance -v 2.0 -s 2 -f 0.1 #to super resolve your image after restoration
 ```
-
+[NOTES About VQFR variant](https://github.com/cliffordkleinsr/DE-SRFREN/releases#:~:text=I%20realized%20that%20the%20VQFR%20face%20restoration%20pipeline%20does%20not%20work%20well%20with%20a%20subject%27s%20eyes%20and%20hair%20features.)
 -For Sr instances _TBA_ (more models coming soon) use:
 ```py
 python inference.py -i inputs/videos -fo merged_sequence -vo results 

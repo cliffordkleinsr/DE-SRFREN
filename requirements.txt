@@ -1,6 +1,6 @@
 av
-imageio[ffmpeg]
-imageio==2.26
+imageio>=2.26
+imageio-ffmpeg>=0.4.6
 Pillow
 argparse
 einops
@@ -16,3 +16,4 @@ torch>=1.7
 torchvision
 tqdm
 yapf
+

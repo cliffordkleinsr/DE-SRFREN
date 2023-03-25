@@ -2,7 +2,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/11m6d16yPfaqauhxKTitb6mBmc4zM3KYS?usp=sharing])
 
 As the name suggests, this is a video restoration pipeline pulling from various cutting edge technologies and merging them to create the one processing pipeline, for videos, to rule them all. The pipeline borrows from multiple  AI techniques from different ontributers these techniques are mentioned in our [releases](https://github.com/cliffordkleinsr/DE-SRFREN/releases) page.
-If you like our project please give as a star and also don't forget to like the other projects used by the video restorationpipeline :cowboy_hat_face:
+If you like our project please give as a star and also don't forget to like the other projects used by the video restoration pipeline :cowboy_hat_face:
 
 > *NOTE* only one video at a time
 

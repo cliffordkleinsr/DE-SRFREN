@@ -52,6 +52,15 @@ https://user-images.githubusercontent.com/37869706/227707586-bd37fe26-bd15-499c-
 ### PROCESSED WITH DE-SRFREN
 https://user-images.githubusercontent.com/37869706/227707730-c1a1bbed-25e0-422e-9a79-f4b85e5835d1.mp4
 
+Original            |  Processed
+:-------------------------:|:-------------------------:
+![image](https://user-images.githubusercontent.com/37869706/228237407-5a06754b-c01d-4b6d-afb6-b7042f3f1678.png) | ![image](https://user-images.githubusercontent.com/37869706/228237129-726bf3a4-d5b8-4835-8333-449e1d759749.png)
+
+Original            |  Processed
+:-------------------------:|:-------------------------:
+![image](https://user-images.githubusercontent.com/37869706/228238158-b5a271c3-b3b9-42d9-b14f-d2b28e2ab313.png) | ![image](https://user-images.githubusercontent.com/37869706/228238188-e074f4d9-848a-4caf-8b49-3ae04458818c.png)
+
+
 
 # Open tasks
 1. [X] Take a video frame and turn into images

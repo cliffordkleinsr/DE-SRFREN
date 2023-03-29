@@ -94,8 +94,8 @@ Feature Requests
 1. [ ] Frame Generation 24-60 FPS
 2. [ ] More support for different video formats
 2. [ ] Color BLack and White Images
-3. [ ] Lossless Decoding and encoding? TIFF?
-4. [ ] Sound restoration *
+3. [X] Lossless Decoding and encoding
+4. [X] Sound restoration 
 
  
  # BibTeX

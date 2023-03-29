@@ -6,6 +6,26 @@ If you like our project please give as a star and also don't forget to like the 
 
 > *NOTE* only one video at a time
 
+# Installation
+Setting up the environment
+```bash
+# Make sure you have git installed
+git clone https://github.com/cliffordkleinsr/DE-SRFREN.git
+cd DE-SRFREN
+# Make sure you have python installed -.-"
+# Install basicsr 
+pip install basicsr 
+# Install facexlib 
+# We use face detection and face restoration helper in the facexlib package
+pip install facexlib #parsing path net and resnet faces
+pip install realesrgan  
+pip install gfpgan
+
+pip install -r requirements.txt
+python setup.py develop
+```
+As a side note, make sure you have pytorch compiled with cuda binaries installed otherwise inference speed using the cpu will be greatly impacted
+
 ### USAGE
 ----
 - Basic argument structure:

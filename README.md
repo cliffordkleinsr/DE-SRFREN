@@ -34,7 +34,7 @@ As a side note, make sure you have Pytorch compiled with Cuda binaries installed
 -o or --video_output, your video output
 -n, model name
 --ffmpeg_bin, path to ffmpeg.exe
---ffptobe_bin, path to fprobe.exe
+--ffprobe_bin, path to fprobe.exe
 -h or --help, for help with arguments
 ```
 

@@ -44,6 +44,7 @@ python inference.py -i inputs/videos -fo merged_sequence -vo results --face_enha
 ```
 
 - For quick inference with the VQFR variant use:
+> **NOTE**: only usable with v0.0.1
 ```py
 python inference.py -i inputs/videos -fo merged_sequence -vo results --vqfr_enhance -v 2.0 -s 2 -f 0.1 --bg_upsampler None #for faster inference
 #or

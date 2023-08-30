@@ -1,12 +1,12 @@
 # DE-SRFREN
-Video restoration Processing Pipeline
+Video Restoration Processing Pipeline
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/11m6d16yPfaqauhxKTitb6mBmc4zM3KYS?usp=sharing])
 
-As the name suggests, this is a video restoration pipeline pulling from various cutting-edge technologies and merging them to create one processing pipeline, for videos, to rule them all. The pipeline borrows from multiple  AI techniques from different contributers, these techniques are mentioned in our [releases](https://github.com/cliffordkleinsr/DE-SRFREN/releases) page.
+As the name suggests, this is a video restoration pipeline pulling from various cutting-edge technologies and merging them to create one processing pipeline, for videos, to rule them all. The pipeline borrows from multiple  AI techniques from different contributors, these techniques are mentioned in our [releases](https://github.com/cliffordkleinsr/DE-SRFREN/releases) page.
 If you like our project please give us a star and also don't forget to like the other projects used by the video restoration pipeline :cowboy_hat_face:
 
-> *NOTE* only one video at a time
+> *NOTE* Only one video at a time!
 
 # Installation
 Setting up the environment
@@ -14,12 +14,12 @@ Setting up the environment
 # Make sure you have git installed
 git clone https://github.com/cliffordkleinsr/DE-SRFREN.git
 cd DE-SRFREN
-# Make sure you have python and pytorch installed -.-"
+# Make sure you have Python and PyTorch installed -.-"
 # Install basicsr 
 pip install basicsr 
 # Install facexlib 
 # We use face detection and face restoration helper in the facexlib package
-pip install facexlib #parsing path net and resnet faces
+pip install facexlib #parsing path net and ResNet faces
 pip install realesrgan  
 pip install gfpgan
 pip install -r requirements.txt
@@ -70,17 +70,17 @@ Original            |  Processed
 
 
 # Open tasks
-1. [X] Take a video frame and turn into images
+1. [X] Take a video frame and turn it into images
 2. [X] Super resolve the image
 3. [X] Restore the Faces in each frame step
 4. [X] Merge Frames H.264 codec MP4
-5. [X] Speed up inference Uses NVENC PIPE: Inference now at: 10fps using `RTX 4090 | 7fps using RTX 4080 | 3 fps using RTX 3060`. Tested using these three GPU's!
+5. [X] Speed up inference Uses NVENC PIPE: Inference now at: `10fps using RTX 4090 | 7fps using RTX 4080 | 3 fps using RTX 3060`. Tested using these three GPUs!
 
 Feature Requests
 -------------
 1. [ ] Frame Generation 24-60 FPS
 2. [ ] More support for different video formats
-2. [ ] Color BLack and White Images
+2. [ ] Color Black and White Images
 3. [X] Lossless Decoding and encoding
 4. [X] Sound restoration 
 

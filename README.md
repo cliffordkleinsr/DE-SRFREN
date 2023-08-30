@@ -74,7 +74,7 @@ Original            |  Processed
 2. [X] Super resolve the image
 3. [X] Restore the Faces in each frame step
 4. [X] Merge Frames H.264 codec MP4
-5. [ ] Speed up inference *(main focus)
+5. [X] Speed up inference Uses NVENC PIPE: Inference now at: 10fps using `RTX 4090 | 7fps using RTX 4080 | 3 fps using RTX 3060`. Tested using these three GPU's!
 
 Feature Requests
 -------------

@@ -40,7 +40,6 @@ As a side note, make sure you have Pytorch compiled with Cuda binaries installed
 
 - For quick inference on Windows
 ```py
-cd v0.0.2
 python inference.py -i inputs/your_video.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe --face_enhance --suffix outx2 
 ```
 **Note:** face_enhancer only works with videos of real people, If you are working with anime/animation (cartoon) characters, use:

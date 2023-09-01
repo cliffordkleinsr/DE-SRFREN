@@ -13,7 +13,7 @@ Setting up the environment
 ```bash
 # Make sure you have git installed
 git clone https://github.com/cliffordkleinsr/DE-SRFREN.git
-cd DE-SRFREN
+cd DE-SRFREN/v0.0.2
 # Make sure you have Python and PyTorch installed -.-"
 # Install basicsr 
 pip install basicsr 

@@ -37,6 +37,7 @@ As a side note, make sure you have Pytorch compiled with Cuda binaries installed
 --ffprobe_bin, path to fprobe.exe
 -h or --help, for help with arguments
 ```
+**Note** The arguments --ffmpef_bin and --ffprobe_bin should only be used if you have not specified the 'ffmpeg binaries' in your environment variables.
 
 - For quick inference on Windows
 ```py

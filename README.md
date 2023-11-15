@@ -1,7 +1,9 @@
 # DE-SRFREN
 Video Restoration Processing Pipeline
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/11m6d16yPfaqauhxKTitb6mBmc4zM3KYS?usp=sharing])
+> We've released a public colab notebook for use! use the link below to try:
+
+> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1sWBOUMiT_lRO8HGYxW2aQRtixQUnL3Yo?usp=sharing])
 
 As the name suggests, this is a video restoration pipeline pulling from various cutting-edge technologies and merging them to create one processing pipeline, for videos, to rule them all. The pipeline borrows from multiple  AI techniques from different contributors, these techniques are mentioned in our [releases](https://github.com/cliffordkleinsr/DE-SRFREN/releases) page.
 If you like our project please give us a star and also don't forget to like the other projects used by the video restoration pipeline :cowboy_hat_face:

@@ -9,7 +9,7 @@ from torchvision.transforms.functional import normalize
 from gfpgan import GFPGANer
 from realesrgan.archs.srvgg_arch import SRVGGNetCompact
 from basicsr.utils.download_util import load_file_from_url
-from basicsr.utils.registry import ARCH_REGISTRY
+from desr.utils import ARCH_REGISTRY
 
 
 def inference_video(args, video_save_path, device=None, total_workers=1, worker_idx=0):

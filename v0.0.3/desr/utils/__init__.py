@@ -1,7 +1,9 @@
-"classmethod"
-
+from .video_util import VideoReader, VideoWriter
+from .registry import ARCH_REGISTRY
 __all__ = [
     'VideoReader',
     'VideoWriter',
-    'Registry',
+    'ARCH_REGISTRY'
 ]
+
+

@@ -1,5 +1,7 @@
-from .video_util import VideoReader, VideoWriter
+"classmethod"
+
 __all__ = [
     'VideoReader',
     'VideoWriter',
+    'Registry',
 ]

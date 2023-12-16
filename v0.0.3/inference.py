@@ -228,7 +228,7 @@ def main():
         help=('Model names: RealESRGAN_x4plus | RealESRNet_x4plus | RealESRGAN_x4plus_anime_6B | RealESRGAN_x2plus | '
               'realesr-animevideov3 | realesr-general-x4v3'))
     parser.add_argument(
-        '--colourize', type=bool, default=False, help='Colourize Black and white image. Default: False')
+        '--colourize',  action='store_true', help='Colourize Black and white image. Default: False')
     parser.add_argument(
         '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
     parser.add_argument(

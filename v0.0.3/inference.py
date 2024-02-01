@@ -3,13 +3,12 @@ from os import path as osp
 from basicsr.utils import imwrite, img2tensor, tensor2img
 from basicsr.archs.rrdbnet_arch import RRDBNet
 from realesrgan import RealESRGANer
-from desr.utils import VideoReader, VideoWriter
+from desr.utils import VideoReader, VideoWriter, pre_process_batched, batch_enhance_rgb
 from tqdm import tqdm
 from torchvision.transforms.functional import normalize
 from gfpgan import GFPGANer
 from realesrgan.archs.srvgg_arch import SRVGGNetCompact
 from basicsr.utils.download_util import load_file_from_url
-from desr.utils import ARCH_REGISTRY
 
 
 def inference_video(args, video_save_path, device=None, total_workers=1, worker_idx=0):
@@ -102,6 +101,7 @@ def inference_video(args, video_save_path, device=None, total_workers=1, worker_
 
 
    # ------------------------ set up COLORIZER restorer ------------------------ 
+    ''''
     if args.colourize:
         model_path = 'https://github.com/sczhou/CodeFormer/releases/download/v0.1.0/codeformer_colorization.pth'
         colourizer = ARCH_REGISTRY.get('CodeFormer')(
@@ -119,7 +119,7 @@ def inference_video(args, video_save_path, device=None, total_workers=1, worker_
 
     else:
         colourizer = None
-        
+    '''    
     reader = VideoReader(args, total_workers, worker_idx)
     audio = reader.get_audio()
     height, width = reader.get_resolution()
@@ -127,49 +127,65 @@ def inference_video(args, video_save_path, device=None, total_workers=1, worker_
     writer = VideoWriter(args, audio, height, width, video_save_path, fps)
 
     pbar = tqdm(total=len(reader), unit='frame', desc='inference')
-    while True:
-        img = reader.get_frame()
-        if img is None:
-            break
-        
-        try:    
-            if args.face_enhance:
-                # colourize then enhance
-                if args.colourize:
-                    input = cv2.resize(img, (512, 512), interpolation=cv2.INTER_LINEAR)
-                    input_face  = img2tensor(input / 255., bgr2rgb=True, float32=True)
-                    normalize(input_face, (0.5, 0.5, 0.5), (0.5, 0.5, 0.5), inplace=True)
-                    input_face = input_face.unsqueeze(0).to(device)
-                    try:
-                        with torch.no_grad():
-                            # w is fixed to 0 since we didn't train the Stage III for colorization
-                            output_face  = colourizer(input_face, w=0, adain=True)[0]
-                            img = tensor2img(output_face, rgb2bgr=True, min_max=(-1, 1)).astype('uint8')
-                    except Exception as error:
-                        print(f'\tFailed inference for CodeFormer: {error}')
-
-
-                # face enhance
-                _, _, output = face_enhancer.enhance(
-                img,
-                has_aligned=args.aligned,
-                only_center_face=args.only_center_face,
-                paste_back=True)
-                
-            else:    
-                output, _ = bg_upsampler.enhance(img, outscale=args.upscale)
-                
-        except RuntimeError as error:
-            print('Error', error)
-            print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')
-        else:
-            writer.write_frame(output)
+    if args.batch: #does not support face enhancement
+        queue = []
+        assert not args.face_enhance
+        while True:
+            img = reader.get_frame()
+            if img is None:
+                break
+            queue.append(img)
+            if len(queue) == args.batches:
+                try:
+                    output = list(batch_enhance_rgb(upsampler, queue, outscale=args.outscale))
+                    queue.clear()
+                except RuntimeError as error:
+                    print('Error', error)
+                    print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')
+                else:
+                    for frame in output:
+                        writer.write_frame(frame)
+                    pbar.update(args.batch)
+                torch.cuda.synchronize(device)
+        if len(queue):
+            for frame in batch_enhance_rgb(upsampler, queue, outscale=args.outscale):
+                writer.write_frame(frame)
+                pbar.update(1)
+            queue.clear()
+            torch.cuda.synchronize(device)
             
-        torch.cuda.synchronize(device)
-        pbar.update(1)
-        
-    reader.close()
-    writer.close()
+        reader.close()
+        writer.close()   
+
+    else:
+        while True:
+            img = reader.get_frame()
+            if img is None:
+                break
+            
+            try:    
+                if args.face_enhance:     
+                    # face enhance and super resolve
+                    _, _, output = face_enhancer.enhance(
+                    img,
+                    has_aligned=args.aligned,
+                    only_center_face=args.only_center_face,
+                    paste_back=True)
+                    
+                else:    
+                    output, _ = bg_upsampler.enhance(img, outscale=args.upscale)
+                    
+            except RuntimeError as error:
+                print('Error', error)
+                print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')
+            else:
+                writer.write_frame(output)
+                
+            torch.cuda.synchronize(device)
+            pbar.update(1)
+            
+        reader.close()
+        writer.close()
     
 def run(args):
     args.video_name = osp.splitext(os.path.basename(args.input))[0]
@@ -228,6 +244,13 @@ def main():
         help=('Model names: RealESRGAN_x4plus | RealESRNet_x4plus | RealESRGAN_x4plus_anime_6B | RealESRGAN_x2plus | '
               'realesr-animevideov3 | realesr-general-x4v3'))
     parser.add_argument(
+        '-dn',
+        '--denoise_strength',
+        type=float,
+        default=0.5,
+        help=('Denoise strength. 0 for weak denoise (keep noise), 1 for strong denoise ability. '
+              'Only used for the realesr-general-x4v3 model'))
+    parser.add_argument(
         '--colourize',  action='store_true', help='Colourize Black and white image. Default: False')
     parser.add_argument(
         '-s', '--upscale', type=int, default=2, help='The final upsampling scale of the image. Default: 2')
@@ -250,7 +273,10 @@ def main():
     parser.add_argument('--num_process_per_gpu', type=int, default=1)
     parser.add_argument('--ffmpeg_bin', type=str, default='ffmpeg', help='The path to ffmpeg')
     parser.add_argument('--ffprobe_bin', type=str, default='ffprobe', help='The path to ffprobe')
+    parser.add_argument('--batch', action='store_true', help='Batch image processing. Does not support face enhancement)
+    parser.add_argument('--batches', type=int, default=4)
     args = parser.parse_args()
+    
     
     args.input = args.input.rstrip('/').rstrip('\\')
     os.makedirs(args.output, exist_ok=True)

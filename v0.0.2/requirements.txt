@@ -1,14 +1,5 @@
 ffmpeg-python
-Pillow
-einops
 numpy
-pyyaml
-scikit-learn
-scipy
-tb-nightly
-timm
-torch>=1.7
-torchvision
+torch>=1.12
 tqdm
-yapf
 

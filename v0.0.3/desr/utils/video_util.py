@@ -49,7 +49,7 @@ class VideoReader:
         if self.input_type.startswith('video'):
             video_path = get_sub_video(args, total_workers, worker_idx)
             self.stream_reader = (
-                ffmpeg.input(video_path).output('pipe:', format='rawvideo', pix_fmt='bgr24',
+                ffmpeg.input(video_path).output('pipe:', format='rawvideo', pix_fmt='rgb24',
                                                 loglevel='error').run_async(
                                                     pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
             meta = get_video_meta_info(video_path, args.ffprobe_bin)
@@ -103,7 +103,7 @@ class VideoWriter:
 
         if audio is not None:
             self.stream_writer = (
-                ffmpeg.input('pipe:', format='rawvideo', pix_fmt='bgr24', s=f'{out_width}x{out_height}',
+                ffmpeg.input('pipe:', format='rawvideo', pix_fmt='rgb24', s=f'{out_width}x{out_height}',
                              framerate=fps).output(
                                  audio,
                                  video_save_path,
@@ -115,14 +115,16 @@ class VideoWriter:
                                      pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
         else:
             self.stream_writer = (
-                ffmpeg.input('pipe:', format='rawvideo', pix_fmt='bgr24', s=f'{out_width}x{out_height}',
+                ffmpeg.input('pipe:', format='rawvideo', pix_fmt='rgb24', s=f'{out_width}x{out_height}',
                              framerate=fps).output(
                                  video_save_path, pix_fmt='yuv420p', vcodec='h264_nvenc', preset = 'fast',
                                  loglevel='error').overwrite_output().run_async(
                                      pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
 
-    def write_frame(self, frame):
-        frame = frame.astype(np.uint8).tobytes()
+    def write_frame(self, frame:np.ndarray):
+        #frame = frame.astype(np.uint8).tobytes()
+        assert frame.dtype == np.uint8
+        frame = frame.data
         self.stream_writer.stdin.write(frame)
 
     def close(self):

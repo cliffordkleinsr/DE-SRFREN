@@ -1,13 +1,8 @@
 import ffmpeg
-import sys
-import os
-from basicsr.utils import imwrite
-from os import path as osp
 import numpy as np
-import glob as glob
 import mimetypes
 import subprocess
-import warnings
+#import warnings
 
 def get_video_meta_info(video_path, ffprobe):
     ret = {}
@@ -25,17 +20,13 @@ def get_sub_video(args, num_process, process_idx):
     if num_process == 1:
         return args.input
     meta = get_video_meta_info(args.input, args.ffprobe_bin)
-    print(meta)
     duration = int(meta['nb_frames'] / meta['fps'])
     part_time = duration // num_process
-    print(f'duration: {duration}, part_time: {part_time}')
-    os.makedirs(osp.join(args.output, f'{args.video_name}_inp_tmp_videos'), exist_ok=True)
-    out_path = osp.join(args.output, f'{args.video_name}_inp_tmp_videos', f'{process_idx:03d}.mp4')
+    out_path = f'{args.video_name}_inp_tmp_videos/{process_idx:03d}.mp4'
     cmd = [
         args.ffmpeg_bin, f'-hwaccel cuda -i {args.input}', '-ss', f'{part_time * process_idx}',
         f'-to {part_time * (process_idx + 1)}' if process_idx != num_process - 1 else '', '-async 1', out_path, '-y'
     ]
-    print(' '.join(cmd))
     subprocess.call(' '.join(cmd), shell=True)
     return out_path
 
@@ -59,7 +50,8 @@ class VideoReader:
             self.audio = meta['audio']
             self.nb_frames = meta['nb_frames']
         else:
-            self.warn = warnings.warn('We do not support this extension file type or directory for restoration')
+            #self.warn = warnings.warn('We do not support this extension file type or directory for restoration')
+            raise TypeError('We do not support this extension file type or directory for restoration')
         self.idx = 0
     
     def get_resolution(self):
@@ -83,12 +75,13 @@ class VideoReader:
             return None
         img = np.frombuffer(img_bytes, np.uint8).reshape([self.height, self.width, 3])
         return img
+
     def get_frame(self):
         if self.input_type.startswith('video'):
             return self.get_frame_from_stream()
         else:
             return self.warn
-    
+
     def close(self):
         if self.input_type.startswith('video'):
             self.stream_reader.stdin.close()
@@ -109,7 +102,7 @@ class VideoWriter:
                                  video_save_path,
                                  pix_fmt='yuv420p',
                                  vcodec='h264_nvenc',
-                                 preset = 'fast',
+                                 preset='fast',
                                  loglevel='error',
                                  acodec='copy').overwrite_output().run_async(
                                      pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
@@ -117,7 +110,7 @@ class VideoWriter:
             self.stream_writer = (
                 ffmpeg.input('pipe:', format='rawvideo', pix_fmt='bgr24', s=f'{out_width}x{out_height}',
                              framerate=fps).output(
-                                 video_save_path, pix_fmt='yuv420p', vcodec='h264_nvenc', preset = 'fast',
+                                 video_save_path, pix_fmt='yuv420p', vcodec='h264_nvenc', preset='fast',
                                  loglevel='error').overwrite_output().run_async(
                                      pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
 
@@ -128,4 +121,3 @@ class VideoWriter:
     def close(self):
         self.stream_writer.stdin.close()
         self.stream_writer.wait()
-        

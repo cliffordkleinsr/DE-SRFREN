@@ -231,4 +231,4 @@ def main():
 if __name__ == '__main__':
     main()
 
-
+#python inference.py -i inputs/your.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe --face_enhance --suffix outx2 

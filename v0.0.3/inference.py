@@ -273,7 +273,7 @@ def main():
     parser.add_argument('--num_process_per_gpu', type=int, default=1)
     parser.add_argument('--ffmpeg_bin', type=str, default='ffmpeg', help='The path to ffmpeg')
     parser.add_argument('--ffprobe_bin', type=str, default='ffprobe', help='The path to ffprobe')
-    parser.add_argument('--batch', action='store_true', help='Batch image processing. Does not support face enhancement)
+    parser.add_argument('--batch', action='store_true', help='Batch image processing. Does not support face enhancement')
     parser.add_argument('--batches', type=int, default=4)
     args = parser.parse_args()
     

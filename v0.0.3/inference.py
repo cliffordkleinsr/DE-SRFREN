@@ -137,19 +137,19 @@ def inference_video(args, video_save_path, device=None, total_workers=1, worker_
             queue.append(img)
             if len(queue) == args.batches:
                 try:
-                    output = list(batch_enhance_rgb(upsampler, queue, outscale=args.outscale))
+                    output = list(batch_enhance_rgb(bg_upsampler, queue, outscale=args.upscale))
                     queue.clear()
                 except RuntimeError as error:
                     print('Error', error)
                     print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')
                 else:
                     for frame in output:
-                        writer.write_frame(frame)
+                        writer.write_frame(args, frame)
                     pbar.update(args.batch)
                 torch.cuda.synchronize(device)
         if len(queue):
-            for frame in batch_enhance_rgb(upsampler, queue, outscale=args.outscale):
-                writer.write_frame(frame)
+            for frame in batch_enhance_rgb(bg_upsampler, queue, outscale=args.upscale):
+                writer.write_frame(args, frame)
                 pbar.update(1)
             queue.clear()
             torch.cuda.synchronize(device)
@@ -179,7 +179,7 @@ def inference_video(args, video_save_path, device=None, total_workers=1, worker_
                 print('Error', error)
                 print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')
             else:
-                writer.write_frame(output)
+                writer.write_frame(args, output)
                 
             torch.cuda.synchronize(device)
             pbar.update(1)

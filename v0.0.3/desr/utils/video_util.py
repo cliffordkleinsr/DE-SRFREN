@@ -63,6 +63,9 @@ class VideoReader:
         self.idx = 0
     
     def get_resolution(self):
+        '''Ensure you dont have trailing spaces on your video file if you get an error
+        `AttributeError: 'VideoReader' object has no attribute 'height'`
+        '''
         return self.height, self.width
     
     def get_fps(self):
@@ -121,10 +124,12 @@ class VideoWriter:
                                  loglevel='error').overwrite_output().run_async(
                                      pipe_stdin=True, pipe_stdout=True, cmd=args.ffmpeg_bin))
 
-    def write_frame(self, frame:np.ndarray):
-        #frame = frame.astype(np.uint8).tobytes()
-        assert frame.dtype == np.uint8
-        frame = frame.data
+    def write_frame(self, args, frame:np.ndarray):
+        if args.batch:
+            assert frame.dtype == np.uint8
+            frame = frame.data
+        else:
+            frame = frame.astype(np.uint8).tobytes()
         self.stream_writer.stdin.write(frame)
 
     def close(self):

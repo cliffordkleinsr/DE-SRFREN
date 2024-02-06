@@ -15,7 +15,7 @@ Setting up the environment
 ```bash
 # Make sure you have git installed
 git clone https://github.com/cliffordkleinsr/DE-SRFREN.git
-cd DE-SRFREN/v0.0.2
+cd DE-SRFREN/v0.0.3
 # Make sure you have Python and PyTorch installed -.-"
 # Install basicsr 
 pip install basicsr 
@@ -37,18 +37,31 @@ As a side note, make sure you have Pytorch compiled with Cuda binaries installed
 -n, model name
 --ffmpeg_bin, path to ffmpeg.exe
 --ffprobe_bin, path to fprobe.exe
+--batch, ability to batch images
+--batches, num batches default is 4
 -h or --help, for help with arguments
 ```
 **Note** The arguments --ffmpef_bin and --ffprobe_bin should only be used if you have not specified the 'ffmpeg binaries' in your environment variables.
+Batched inference (controlled by --batch parameter, default is 4). lower is better but not <=1
 
 - For quick inference on Windows
+
+>Use if ffmpeg is not installed to path
 ```py
 python inference.py -i inputs/your_video.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe --face_enhance --suffix outx2 
 ```
-**Note:** face_enhancer only works with videos of real people, If you are working with anime/animation (cartoon) characters, use:
+>>**Note:** face_enhancer only works with videos of real people, If you are working with anime/animation (cartoon) characters, use:
 ```py
 python inference.py -i inputs/your_anime_video.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe -n realesr-animevideov3 --suffix outx2
 ````
+>Use if ffmpeg is installed to windows environment path
+```
+python inference.py -i inputs/your_video.mp4 --face_enhance --suffix outx2
+```
+>>face_enhancer only works with videos of real people
+```
+python inference.py -i inputs/your_anime_video.mp4 -n realesr-animevideov3 --suffix outx2
+```
 - For quick inference on Colab/Linux environment is similar to Windows but avoid using the `--ffmpeg_bin ` and `--ffprobe_bin` when the  binaries are already installed
 - The Vector Quantized Code book is deprecated and  thus can only be used with v0.0.1:
 

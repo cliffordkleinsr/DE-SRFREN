@@ -82,14 +82,20 @@ Original            |  Processed
 :-------------------------:|:-------------------------:
 ![image](https://user-images.githubusercontent.com/37869706/228238158-b5a271c3-b3b9-42d9-b14f-d2b28e2ab313.png) | ![image](https://user-images.githubusercontent.com/37869706/228238188-e074f4d9-848a-4caf-8b49-3ae04458818c.png)
 
-
+# Performance Optimizations
+1. Moved the final scaling and uint8 quantization to GPU, reducing CPU and main memory bandwidth consumption. 2.5x speed-up.
+2. Instruct FFMPEG to use RGB frames instead of BGR so no need to swap channels.
+3. Batched inference (controlled by --batch parameter, default is 4).
+4. Instruct torch to make contiguous tensors after the BCHW -> BHWC transform on GPU. So no need to copy the buffer before writing to FFMPEG . Reduced output IO time by 10x.
 
 # Open tasks
 1. [X] Take a video frame and turn it into images
 2. [X] Super resolve the image
 3. [X] Restore the Faces in each frame step
 4. [X] Merge Frames H.264 codec MP4
-5. [X] Speed up inference Uses NVENC PIPE: Inference now at: `10fps using RTX 4090 | 7fps using RTX 4080 | 3 fps using RTX 3060`. Tested using these three GPUs!
+5. [X] Speed up inference Uses NVENC PIPE:
+
+
 
 Feature Requests
 -------------

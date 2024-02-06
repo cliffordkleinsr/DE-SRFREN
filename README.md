@@ -93,7 +93,10 @@ Original            |  Processed
 2. [X] Super resolve the image
 3. [X] Restore the Faces in each frame step
 4. [X] Merge Frames H.264 codec MP4
-5. [X] Speed up inference Uses NVENC PIPE:
+5. [X] Speed up inference Uses NVENC PIPE
+6. [ ] Old Video Scratch Detection
+7. [ ] Global Scene restoration
+   
 
 
 

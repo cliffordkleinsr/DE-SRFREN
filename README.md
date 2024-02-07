@@ -47,19 +47,19 @@ Batched inference (controlled by --batch parameter, default is 4). lower is bett
 - For quick inference on Windows
 
 >Use if ffmpeg is not installed to path
-```py
+```yaml
 python inference.py -i inputs/your_video.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe --face_enhance --suffix outx2 
 ```
 >>**Note:** face_enhancer only works with videos of real people, If you are working with anime/animation (cartoon) characters, use:
-```py
+```yaml
 python inference.py -i inputs/your_anime_video.mp4 --ffmpeg_bin ffmpeg/bin/ffmpeg.exe --ffprobe_bin ffmpeg/bin/ffprobe.exe -n realesr-animevideov3 --suffix outx2
 ````
 >Use if ffmpeg is installed to windows environment path
-```
+```yaml
 python inference.py -i inputs/your_video.mp4 --face_enhance --suffix outx2
 ```
 >>face_enhancer only works with videos of real people
-```
+```yaml
 python inference.py -i inputs/your_anime_video.mp4 -n realesr-animevideov3 --suffix outx2
 ```
 - For quick inference on Colab/Linux environment is similar to Windows but avoid using the `--ffmpeg_bin ` and `--ffprobe_bin` when the  binaries are already installed

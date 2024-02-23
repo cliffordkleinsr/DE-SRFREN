@@ -85,8 +85,9 @@ Original            |  Processed
 # Performance Optimizations
 1. Moved the final scaling and uint8 quantization to GPU, reducing CPU and main memory bandwidth consumption. 2.5x speed-up.
 2. Instruct FFMPEG to use RGB frames instead of BGR so no need to swap channels.
-3. Batched inference (controlled by --batch parameter, default is 4).
+3. Batched inference (controlled by invoking the --batch & --batches parameter, default is 4).
 4. Instruct torch to make contiguous tensors after the BCHW -> BHWC transform on GPU. So no need to copy the buffer before writing to FFMPEG . Reduced output IO time by 10x.
+5. Use NVENC pipilene when available to decode and encode the images when piping inputs
 
 # Open tasks
 1. [X] Take a video frame and turn it into images

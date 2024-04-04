@@ -11,14 +11,14 @@ import warnings
 
 def get_video_meta_info(video_path, ffprobe):
     ret = {}
-    probe = ffmpeg.probe(video_path, cmd=ffprobe)
+    probe = ffmpeg.probe(video_path, cmd=ffprobe, count_packets=None)
     video_streams = [stream for stream in probe['streams'] if stream['codec_type'] == 'video']
     has_audio = any(stream['codec_type'] == 'audio' for stream in probe['streams'])
     ret['width'] = video_streams[0]['width']
     ret['height'] = video_streams[0]['height']
     ret['fps'] = eval(video_streams[0]['avg_frame_rate'])
     ret['audio'] = ffmpeg.input(video_path).audio if has_audio else None
-    ret['nb_frames'] = int(video_streams[0]['nb_frames'])
+    ret['nb_frames'] = int(video_streams[0]['nb_frames']) if 'nb_frames' in video_streams[0] else int(video_streams[0]['nb_read_packets'])
     return ret
 
 def get_sub_video(args, num_process, process_idx):
